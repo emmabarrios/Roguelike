@@ -21,6 +21,9 @@
     <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TextureManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="SDL2.dll" />
@@ -47,18 +50,15 @@
     <ClInclude Include="Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TextureManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\images\player.png">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="assets\images\tank-tiger-right.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="player.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="tank-tiger-right.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

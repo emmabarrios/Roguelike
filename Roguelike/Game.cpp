@@ -1,5 +1,5 @@
 #include "Game.h"
-
+#include "TextureManager.h"
 
 SDL_Texture* playerTexture;
 SDL_Rect sourceRectangle;
@@ -36,7 +36,7 @@ void Game::Init(const char* title, int x, int y, int width, int height, bool ful
 	}
 
 	// we dont need to keep the surface after finish using it
-	SDL_Surface* tempSurface = IMG_Load("tank-panther-right.png");
+	SDL_Surface* tempSurface = IMG_Load("assets/images/tank-tiger-right.png");
 	playerTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
 	SDL_FreeSurface(tempSurface);
 }
@@ -62,6 +62,8 @@ void Game::Update() {
 	count ++;
 	destinationRectangle.h = 64;
 	destinationRectangle.w = 64;
+
+	destinationRectangle.x = count;
 }
 
 void Game::Render() {
