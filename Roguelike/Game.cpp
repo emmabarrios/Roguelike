@@ -1,9 +1,9 @@
 #include "Game.h"
 #include "TextureManager.h"
+#include "GameObject.h"
 
-SDL_Texture* playerTexture;
-SDL_Rect sourceRectangle;
-SDL_Rect destinationRectangle;
+GameObject* player;
+GameObject* enemy;
 
 Game::Game() {
 
@@ -35,7 +35,8 @@ void Game::Init(const char* title, int x, int y, int width, int height, bool ful
 		isRunning = false;
 	}
 
-	playerTexture = TextureManager::LoadTexture(renderer, "assets/images/tank-tiger-right.png");
+	player = new GameObject("assets/images/tank-tiger-right.png", renderer, 0, 0);
+	enemy = new GameObject("assets/images/player.png", renderer, 50, 50);
 
 }
 
@@ -57,17 +58,14 @@ void Game::HandleEvents() {
 }
 
 void Game::Update() {
-	count ++;
-	destinationRectangle.h = 64;
-	destinationRectangle.w = 64;
-
-	destinationRectangle.x = count;
+	player->Update();
+	enemy->Update();
 }
 
 void Game::Render() {
-	// Clear render buffer
 	SDL_RenderClear(renderer);
-	SDL_RenderCopy(renderer, playerTexture, NULL, &destinationRectangle);
+	player->Render();
+	enemy->Render();
 	SDL_RenderPresent(renderer);
 }
 
