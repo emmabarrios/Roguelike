@@ -35,10 +35,8 @@ void Game::Init(const char* title, int x, int y, int width, int height, bool ful
 		isRunning = false;
 	}
 
-	// we dont need to keep the surface after finish using it
-	SDL_Surface* tempSurface = IMG_Load("assets/images/tank-tiger-right.png");
-	playerTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
-	SDL_FreeSurface(tempSurface);
+	playerTexture = TextureManager::LoadTexture(renderer, "assets/images/tank-tiger-right.png");
+
 }
 
 void Game::HandleEvents() {
