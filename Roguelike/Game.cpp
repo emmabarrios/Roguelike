@@ -1,6 +1,10 @@
 #include "Game.h"
 
 
+SDL_Texture* playerTexture;
+SDL_Rect sourceRectangle;
+SDL_Rect destinationRectangle;
+
 Game::Game() {
 
 }
@@ -30,25 +34,40 @@ void Game::Init(const char* title, int x, int y, int width, int height, bool ful
 	else {
 		isRunning = false;
 	}
+
+	// we dont need to keep the surface after finish using it
+	SDL_Surface* tempSurface = IMG_Load("tank-panther-right.png");
+	playerTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
+	SDL_FreeSurface(tempSurface);
 }
 
 void Game::HandleEvents() {
-	SDL_Event event;
-	SDL_PollEvent(&event);
-	switch (event.type) {
+	SDL_Event sdlEvent;
+
+	SDL_PollEvent(&sdlEvent);
+
+	switch (sdlEvent.type) {
 	case SDL_QUIT:
 		isRunning = false;
+		break;
+	case SDL_KEYDOWN:
+		if (sdlEvent.key.keysym.sym == SDLK_ESCAPE) {
+			isRunning = false;
+		}
 		break;
 	}
 }
 
 void Game::Update() {
+	count ++;
+	destinationRectangle.h = 64;
+	destinationRectangle.w = 64;
 }
 
 void Game::Render() {
 	// Clear render buffer
 	SDL_RenderClear(renderer);
-
+	SDL_RenderCopy(renderer, playerTexture, NULL, &destinationRectangle);
 	SDL_RenderPresent(renderer);
 }
 
