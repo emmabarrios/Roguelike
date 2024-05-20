@@ -44,7 +44,7 @@ void Game::Init(const char* title, int x, int y, int width, int height, bool ful
 
 	map = new Map();
 
-	player.addComponent<PositionComponent>(100,100);
+	player.addComponent<PositionComponent>(0,0);
 	player.addComponent<SpriteComponent>("assets/images/tank-tiger-right.png"); 
 
 }
@@ -67,7 +67,12 @@ void Game::HandleEvents() {
 }
 
 void Game::Update() {
+	manager.refresh();
 	manager.update();
+
+	if (player.getComponent<PositionComponent>().x() > 100) {
+		player.getComponent<SpriteComponent>().setTexture("assets/images/player.png");
+	}
 }
 
 void Game::Render() {
