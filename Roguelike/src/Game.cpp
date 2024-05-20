@@ -45,7 +45,7 @@ void Game::Init(const char* title, int x, int y, int width, int height, bool ful
 	map = new Map();
 
 	player.addComponent<PositionComponent>(100,100);
-	player.addComponent<SpriteComponent>("assets/images/tank-tiger-right.png");
+	player.addComponent<SpriteComponent>("assets/images/tank-tiger-right.png"); 
 
 }
 
