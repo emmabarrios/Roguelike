@@ -3,7 +3,7 @@
 #include "Map.h"
 #include "ECS/Components.h"
 #include "Vector2.h"
-
+#include "Collision.h"
 
 
 Map* map;
@@ -12,7 +12,10 @@ SDL_Renderer* Game::renderer = nullptr;
 SDL_Event Game::event;
 
 Manager manager;
+
 auto& player(manager.addEntity());
+auto& wall(manager.addEntity());
+
 
 Game::Game() {
 
@@ -47,8 +50,14 @@ void Game::Init(const char* title, int x, int y, int width, int height, bool ful
 	map = new Map();
 
 	player.addComponent<TransformComponent>();
-	player.addComponent<SpriteComponent>("assets/images/tank-tiger-right.png"); 
 	player.addComponent<KeyboardController>();
+	player.addComponent<SpriteComponent>("assets/images/tank-tiger-right.png"); 
+	player.addComponent<SpriteComponent>("assets/images/tank-tiger-right.png"); 
+	player.addComponent<ColliderComponent>("player");
+
+	wall.addComponent<TransformComponent>(300.0f, 300.0f, 300, 20, 1);
+	wall.addComponent<SpriteComponent>("assets/images/wall.png");
+	wall.addComponent<ColliderComponent>("wall");
 
 }
 
@@ -72,9 +81,9 @@ void Game::Update() {
 	manager.refresh();
 	manager.update();
 
-	/*if (player.getComponent<TransformComponent>().position.x > 100) {
-		player.getComponent<SpriteComponent>().setTexture("assets/images/player.png");
-	}*/
+	if (Collision::AABB(player.getComponent<ColliderComponent>().collider, wall.getComponent<ColliderComponent>().collider)) {
+		player.getComponent<TransformComponent>().velocity * -1;
+	}
 }
 
 void Game::Render() {

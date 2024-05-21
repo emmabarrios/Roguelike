@@ -12,9 +12,15 @@ private:
 	SDL_Rect destRect;
 public:
 	SpriteComponent() = default;
+
 	SpriteComponent(const char* path) {
 		setTexture(path);
 	}
+
+	~SpriteComponent() {
+		SDL_DestroyTexture(texture);
+	}
+
 
 	void setTexture(const char* path) {
 		texture = TextureManager::LoadTexture(path);
@@ -29,17 +35,16 @@ public:
 		srcRect.w = 32;
 		srcRect.h = 32;
 
-		// why default it on 64x64? I used it with 32x32
-		/*destRect.w = 64;
-		destRect.h = 64;*/
-
-		destRect.w = 32;
-		destRect.h = 32;
+		destRect.w = transform->width;
+		destRect.h = transform->height;
 	}
 
 	void update() override {
-		destRect.x = (int)transform->position.x;
-		destRect.y = (int)transform->position.y;
+		destRect.x = static_cast<int>(transform->position.x);
+		destRect.y = static_cast<int>(transform->position.y);
+
+		destRect.w = transform->width * transform->scale;
+		destRect.h = transform->height * transform->scale;
 	}
 
 	void draw() override {
