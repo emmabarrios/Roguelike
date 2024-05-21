@@ -9,6 +9,7 @@
 Map* map;
 
 SDL_Renderer* Game::renderer = nullptr;
+SDL_Event Game::event;
 
 Manager manager;
 auto& player(manager.addEntity());
@@ -47,20 +48,20 @@ void Game::Init(const char* title, int x, int y, int width, int height, bool ful
 
 	player.addComponent<TransformComponent>();
 	player.addComponent<SpriteComponent>("assets/images/tank-tiger-right.png"); 
+	player.addComponent<KeyboardController>();
 
 }
 
 void Game::HandleEvents() {
-	SDL_Event sdlEvent;
 
-	SDL_PollEvent(&sdlEvent);
+	SDL_PollEvent(&event);
 
-	switch (sdlEvent.type) {
+	switch (event.type) {
 	case SDL_QUIT:
 		isRunning = false;
 		break;
 	case SDL_KEYDOWN:
-		if (sdlEvent.key.keysym.sym == SDLK_ESCAPE) {
+		if (event.key.keysym.sym == SDLK_ESCAPE) {
 			isRunning = false;
 		}
 		break;
@@ -71,11 +72,9 @@ void Game::Update() {
 	manager.refresh();
 	manager.update();
 
-	player.getComponent<TransformComponent>().position.Add(Vector2(5,0));
-
-	if (player.getComponent<TransformComponent>().position.x > 100) {
+	/*if (player.getComponent<TransformComponent>().position.x > 100) {
 		player.getComponent<SpriteComponent>().setTexture("assets/images/player.png");
-	}
+	}*/
 }
 
 void Game::Render() {
